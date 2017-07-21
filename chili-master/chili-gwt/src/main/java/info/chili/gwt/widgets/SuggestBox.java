@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class SuggestBox extends BaseField implements KeyPressHandler, KeyUpHandler, KeyDownHandler {
 
-    MultiWordSuggestOracle data = new MultiWordSuggestOracle();
+    public MultiWordSuggestOracle data = new MultiWordSuggestOracle();
     com.google.gwt.user.client.ui.SuggestBox box = new com.google.gwt.user.client.ui.SuggestBox(data);
     protected Map<String, String> map;
 
