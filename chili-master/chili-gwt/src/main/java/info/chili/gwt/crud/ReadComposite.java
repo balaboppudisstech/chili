@@ -11,13 +11,15 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
+import info.chili.gwt.fields.TextAreaField;
+import java.util.Map;
 
 public abstract class ReadComposite extends CRUDComposite {
 
     protected Button cloneB = new Button("Create Copy");
     Anchor backL = new Anchor("Back");
     Anchor editL = new Anchor("Edit");
-    
+
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
         configureBack();
@@ -52,7 +54,7 @@ public abstract class ReadComposite extends CRUDComposite {
             configureClone();
         }
     }
-    
+
     protected void configureBack() {
         if (enableBack()) {
             entityFieldsPanel.add(backL);
@@ -68,7 +70,7 @@ public abstract class ReadComposite extends CRUDComposite {
             });
         }
     }
-    
+
     protected void configureEdit() {
         if (enableEdit()) {
             entityFieldsPanel.add(editL);
@@ -79,10 +81,10 @@ public abstract class ReadComposite extends CRUDComposite {
                 }
             });
         }
-     }
-    
-    protected void onEditClicked(){
-        
+    }
+
+    protected void onEditClicked() {
+
     }
 
     @Override
@@ -94,15 +96,15 @@ public abstract class ReadComposite extends CRUDComposite {
             basePanel.add(editL);
         }
     }
-    
+
     protected boolean enableBack() {
         return false;
     }
-    
+
     protected ReadAllComposite getReadAllPanel() {
         return null;
     }
-    
+
     protected boolean enableEdit() {
         return false;
     }
@@ -129,5 +131,15 @@ public abstract class ReadComposite extends CRUDComposite {
     public abstract void loadEntity(String entityId);
 
     public abstract void populateFieldsFromEntity(JSONObject entity);
+
+    public void formatTextAreaFields() {
+        for (Map.Entry entry : fields.entrySet()) {
+            if (entry.getValue() instanceof TextAreaField) {
+                TextAreaField textAreaField = (TextAreaField) entry.getValue();
+                textAreaField.getTextbox().setCharacterWidth(75);
+                textAreaField.getTextbox().setVisibleLines(6);
+            }
+        }
+    }
 
 }

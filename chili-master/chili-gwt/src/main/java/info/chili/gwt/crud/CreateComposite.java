@@ -152,4 +152,15 @@ public abstract class CreateComposite extends CRUDComposite implements ClickHand
             }
         }
     }
+
+    public void formatTextAreaFields() {
+        for (Map.Entry entry : fields.entrySet()) {
+            if (entry.getValue() instanceof TextAreaField) {
+                TextAreaField textAreaField = (TextAreaField) entry.getValue();
+                textAreaField.getTextbox().setCharacterWidth(75);
+                textAreaField.getTextbox().setVisibleLines(6);
+            }
+        }
+    }
+
 }
