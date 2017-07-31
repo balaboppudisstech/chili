@@ -9,7 +9,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import info.chili.analytics.model.Event;
 import info.chili.analytics.model.Event.EventsTable;
-import info.chili.analytics.utils.CachedUserAgentStringParser;
+//import info.chili.analytics.utils.CachedUserAgentStringParser;
 import info.chili.commons.DateUtils;
 import java.util.Date;
 import java.util.List;
@@ -36,16 +36,16 @@ public class EventsService {
 
     @Autowired
     protected MongoOperations mongoTemplate;
-    @Autowired
-    protected CachedUserAgentStringParser cachedUserAgentStringParser;
+//    @Autowired
+//    protected CachedUserAgentStringParser cachedUserAgentStringParser;
 
     @Async
     @Transactional
     public void saveEvents(Event... events) {
         for (Event event : events) {
             if (!Strings.isNullOrEmpty(event.getUserAgentInfo())) {
-                ReadableUserAgent agent = cachedUserAgentStringParser.parse(event.getUserAgentInfo());
-                event.setUserAgentInfo(ReflectionToStringBuilder.toString(agent));
+//                ReadableUserAgent agent = cachedUserAgentStringParser.parse(event.getUserAgentInfo());
+//                event.setUserAgentInfo(ReflectionToStringBuilder.toString(agent));
             }
         }
         mongoTemplate.insertAll(ImmutableList.copyOf(events));
