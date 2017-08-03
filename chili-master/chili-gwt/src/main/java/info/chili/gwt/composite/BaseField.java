@@ -25,7 +25,7 @@ public abstract class BaseField extends Composite implements BlurHandler {
         this.className = className;
         //TODO move this to configure metjhod
         if (required) {
-            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<em class='tfRequired'>*</em>");
+            label.setHTML(Utils.getAttributeLabel(attributeName, className, constants) + "<b style = 'color:red'>&#42;</b>");
         } else {
             label.setHTML(Utils.getAttributeLabel(attributeName, className, constants));
         }
