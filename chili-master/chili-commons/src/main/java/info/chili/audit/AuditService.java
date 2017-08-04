@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.lang.time.DateUtils;
@@ -82,7 +84,7 @@ public class AuditService {
         for (AuditChangeDto dto : changes) {
             changesTable.append("<tr>");
             changesTable.append("<td>");
-            changesTable.append(dto.getPropertyName());
+            changesTable.append(toLowerCase(dto.getPropertyName()));
             changesTable.append("</td>");
             changesTable.append("<td>");
             changesTable.append(dto.getOldValue());
@@ -94,6 +96,27 @@ public class AuditService {
         }
         changesTable.append("</table>");
         return changesTable.toString();
+    }
+
+    public static StringBuilder toLowerCase(String inputString) {
+        StringBuilder str = new StringBuilder();
+        String[] tokens = inputString.split("\\s");// Can be space,comma or hyphen
+        for (String token : tokens) {
+            str.append(Character.toUpperCase(token.charAt(0))).append(token.substring(1)).append(" ");
+        }
+        str.toString().trim(); // Trim trailing space
+        StringBuilder s = str;
+        StringBuilder out = new StringBuilder(s);
+        Pattern p = Pattern.compile("[A-Z]");
+        Matcher m = p.matcher(s);
+        int extraFeed = 0;
+        while (m.find()) {
+            if (m.start() != 0) {
+                out = out.insert(m.start() + extraFeed, " ");
+                extraFeed++;
+            }
+        }
+        return out;
     }
 
     public List<AuditChangeDto> compare(Object previousVersion, Object currentVersion, String... ignoreFields) {
@@ -141,24 +164,23 @@ public class AuditService {
                         Date oldDate = (Date) previousValuesMap.get(entry.getKey());
                         dto.setOldValue(info.chili.commons.DateUtils.removeTime(oldDate).toString());
                         Date newDate = (Date) entry.getValue();
-                        if (addStyle) {                        
+                        if (addStyle) {
                             dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + newDate.toString() + "</font>");
                         } else {
                             dto.setNewValue(newDate.toString());
                         }
                         changes.add(dto);
-                    } 
+                    }
                 } else {
                     AuditChangeDto dto = new AuditChangeDto();
                     dto.setPropertyName(entry.getKey());
                     dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
-                    if (addStyle) {   
+                    if (addStyle) {
                         dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
                     } else {
                         dto.setNewValue(entry.getValue().toString());
                     }
                     changes.add(dto);
-                    continue;
                 }
             }
         }
