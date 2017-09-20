@@ -5,11 +5,11 @@
 package info.chili.gwt.utils;
 
 import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.Window;
+import info.chili.gwt.callback.ALRequestCallback;
 import info.chili.gwt.config.ChiliClientConfig;
 
 /**
@@ -57,18 +57,20 @@ public class FileUtils {
         builder.setHeader("Content-Type", "application/json");
 
         try {
-            builder.sendRequest(entity.toString(), new RequestCallback() {
+            builder.sendRequest(entity.toString(), new ALRequestCallback() {
                 @Override
                 public void onResponseReceived(com.google.gwt.http.client.Request request, com.google.gwt.http.client.Response response) {
+                    loadingWidget.hide();
                     if (200 == response.getStatusCode()) {
                         Window.open(ChiliClientConfig.instance().getFileDownloadUrl() + response.getText(), "_blank", "");
                     } else {
-                        Window.alert("error downloading file");
+                        Window.alert("Sorry, we didn't find any results with your search");
                     }
                 }
 
                 @Override
                 public void onError(com.google.gwt.http.client.Request request, Throwable exception) {
+                    loadingWidget.hide();
                     Window.alert(exception.getLocalizedMessage());
                 }
             });
