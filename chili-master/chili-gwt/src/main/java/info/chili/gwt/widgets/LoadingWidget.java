@@ -13,7 +13,7 @@ public class LoadingWidget extends PopupPanel {
     /**
      * The loading.
      */
-    Label loading = new Label("Loading...");
+    Label loading = new Label("Please wait while loading...");
 
     /**
      * Instantiates a new loading widget.
@@ -31,7 +31,7 @@ public class LoadingWidget extends PopupPanel {
     public void show() {
         int left = Window.getClientWidth() / 3;
         this.setPopupPosition(left, 0);
-        addStyleName("y-gwt-ResponseStatusBar");
+        addStyleName("y-gwt-new-ResponseStatusBar");
         super.show();
     }
 
@@ -41,7 +41,7 @@ public class LoadingWidget extends PopupPanel {
      * @see com.google.gwt.user.client.ui.PopupPanel#hide()
      */
     public void hide() {
-        removeStyleName("y-gwt-ResponseStatusBar");
+        removeStyleName("y-gwt-new-ResponseStatusBar");
         super.hide();
     }
 }
