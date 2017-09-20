@@ -1,7 +1,7 @@
 /*
-* To change this template, choose Tools | Templates
-* and open the template in the editor.
-*/
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package info.chili.reporting;
 
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
@@ -33,11 +33,12 @@ import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 
 /**
-*
-* @author anuyalamanchili
-*/
+ *
+ * @author anuyalamanchili
+ */
 public class ReportGenerator {
 //TODO support for email report
+
     public static <T> Response generateReport(List<T> data, String reportName, String format, String location, String... columnOrder) {
         DynamicReport dynamicReport = null;
         if (Strings.isNullOrEmpty(reportName)) {
@@ -47,24 +48,30 @@ public class ReportGenerator {
         if (data.size() > 0) {
             dynamicReport = new ReflectiveReportBuilder(data, columnOrder).build();
             try {
+                DynamicReportOptions dynamicReportOptions = setDynamicStylesOptions();
+                dynamicReportOptions.getPage().setWidth(dynamicReportOptions.getPage().getWidth() + 300);
+                dynamicReportOptions.setLeftMargin(0);
+                dynamicReportOptions.setTopMargin(0);
+                Style titleStyle = createTitleStyle();
+                dynamicReport.setOptions(dynamicReportOptions);
                 dynamicReport.setTitle(reportName);
+                dynamicReport.setTitleStyle(titleStyle);
+                dynamicReport.setOptions(dynamicReportOptions);
                 JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
-                if (format.equalsIgnoreCase("pdf")) {
-                    JasperExportManager.exportReportToPdfFile(jasperPrint, location + filename);
-                }
-                if (format.equalsIgnoreCase("html")) {
-                    JasperExportManager.exportReportToHtmlFile(jasperPrint, location + filename);
-                }
-                if (format.equalsIgnoreCase("xml")) {
-                    JasperExportManager.exportReportToXmlFile(jasperPrint, location + filename, false);
-                }
                 if (format.equalsIgnoreCase("xls")) {
+                    jasperPrint.setProperty("net.sf.jasperreports.export.xls.freeze.row", "3");
                     JRXlsExporter exporter = new JRXlsExporter();
-                    exporter.setParameter(JRExporterParameter.JASPER_PRINT,
-                            jasperPrint);
-                    exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
-                            location + filename);
+                    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                    exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, location + filename);
+                    exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
                     exporter.exportReport();
+                } else if (format.equalsIgnoreCase("pdf")) {
+                    jasperPrint.setProperty("net.sf.jasperreports.export.xls.freeze.row", "3");
+                    JasperExportManager.exportReportToPdfFile(jasperPrint, location + filename);
+                } else if (format.equalsIgnoreCase("html")) {
+                    JasperExportManager.exportReportToHtmlFile(jasperPrint, location + filename);
+                } else if (format.equalsIgnoreCase("xml")) {
+                    JasperExportManager.exportReportToXmlFile(jasperPrint, location + filename, false);
                 }
             } catch (JRException ex) {
                 ex.printStackTrace();
@@ -78,9 +85,9 @@ public class ReportGenerator {
         DynamicReport dynamicReport = null;
         String filename = reportName + UUID.randomUUID().toString() + ".xlsx";
         DynamicReportOptions dynamicReportOptions = setDynamicStylesOptions();
-        dynamicReportOptions.getPage().setWidth(dynamicReportOptions.getPage().getWidth()+300);
+        dynamicReportOptions.getPage().setWidth(dynamicReportOptions.getPage().getWidth() + 300);
         dynamicReportOptions.setLeftMargin(0);
-		dynamicReportOptions.setTopMargin(0);
+        dynamicReportOptions.setTopMargin(0);
         Style titleStyle = createTitleStyle();
         if (data.size() > 0) {
             dynamicReport = new ReflectiveReportBuilder(data, columnOrder).build();
