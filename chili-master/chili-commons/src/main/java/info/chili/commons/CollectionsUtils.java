@@ -4,6 +4,7 @@
  */
 package info.chili.commons;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -46,5 +47,15 @@ public class CollectionsUtils {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
         return sortedMap;
+    }
+
+    public static List<String> getCommonArrayList(List<String> list1, List<String> list2) {
+        List<String> commonList = new ArrayList<>();
+        for (String var : list2) {
+            if (list1.contains(var)) {
+                commonList.add(var);
+            }
+        }
+        return commonList;
     }
 }
