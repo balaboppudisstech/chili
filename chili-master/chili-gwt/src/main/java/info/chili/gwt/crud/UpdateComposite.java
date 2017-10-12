@@ -18,6 +18,7 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
 
     Logger logger = Logger.getLogger(UpdateComposite.class.getName());
     public Button update = new Button("Update");
+    public Button cancel = new Button("Cancel");
 
     public void initUpdateComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
@@ -28,6 +29,7 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
         entityActionsPanel.add(update);
         update.addClickHandler(this);
         update.addStyleName("y-gwt-updateB");
+        configureCancel();
         populateFieldsFromEntity(entity);
     }
 
@@ -39,6 +41,7 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
         basePanel.addStyleName("y-gwt-UpdateBasePanel");
         entityActionsPanel.add(update);
         update.addClickHandler(this);
+        configureCancel();
         loadEntity(entityId);
     }
 
@@ -51,6 +54,28 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
                 disableSubmitButtons();
             }
         }
+    }
+    
+    protected void configureCancel() {
+        if (enableCancel()) {
+//            entityCaptionPanel.addStyleName("y-gwt-CancelEntityCaptionPanel");
+//            entityFieldsPanel.addStyleName("y-gwt-CancelEntityDisplayWidget");
+//            basePanel.addStyleName("y-gwt-CancelBasePanel");
+            entityActionsPanel.add(cancel);
+            cancel.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    onCancelClicked();
+                }
+            });
+        }
+    }
+
+    protected boolean enableCancel() {
+        return false;
+    }
+
+    protected void onCancelClicked() {
     }
 
     public JSONObject getPopulatedEntity() {
