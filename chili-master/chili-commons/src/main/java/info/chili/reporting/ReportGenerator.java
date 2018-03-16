@@ -58,7 +58,14 @@ public class ReportGenerator {
                 dynamicReport.setTitleStyle(titleStyle);
                 dynamicReport.setOptions(dynamicReportOptions);
                 JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
-                if (format.equalsIgnoreCase("xls")) {
+                if (format.equalsIgnoreCase("xlsx")) {
+                    jasperPrint.setProperty("net.sf.jasperreports.export.xls.freeze.row", "3");
+                    JRXlsxExporter exporter = new JRXlsxExporter();
+                    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                    exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, location + filename);
+                    exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+                    exporter.exportReport();
+                } else if(format.equalsIgnoreCase("xls")) {
                     jasperPrint.setProperty("net.sf.jasperreports.export.xls.freeze.row", "3");
                     JRXlsExporter exporter = new JRXlsExporter();
                     exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
