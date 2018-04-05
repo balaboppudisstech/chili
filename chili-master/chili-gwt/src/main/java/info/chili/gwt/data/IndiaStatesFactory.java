@@ -18,7 +18,7 @@ public class IndiaStatesFactory {
         List<String> states = new ArrayList();
          states.add("SELECT");
         states.add("AP");
-        states.add("TG");
+        states.add("TS");
         states.add("TN");
         states.add("AR");
         states.add("AS");
