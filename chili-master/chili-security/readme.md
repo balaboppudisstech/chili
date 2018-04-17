@@ -2,6 +2,7 @@
 #### CSRF Filter
 #### XSS Filter
 #### SQL Injection Filter
+#### Sensitive Data Filter
 
 ## OWASP ESAPI
 #### File Validator
