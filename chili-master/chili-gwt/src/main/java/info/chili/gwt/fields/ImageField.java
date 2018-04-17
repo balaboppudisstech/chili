@@ -17,7 +17,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.resources.client.ImageResource;
 import info.chili.gwt.config.ChiliClientConfig;
 import info.chili.gwt.resources.ChiliImages;
-import info.chili.gwt.widgets.GenericPopup;
 
 //TODO add File/ImageUploadPanel support for this (merge)
 public class ImageField extends ALComposite implements ClickHandler {
@@ -53,7 +52,7 @@ public class ImageField extends ALComposite implements ClickHandler {
         });
         init(panel);
     }
-    
+
     public ImageField(String labelName, ImageResource imageResource, final int width, final int height, boolean showLabel) {
         label.setText(labelName);
         label.setVisible(showLabel);
@@ -109,7 +108,9 @@ public class ImageField extends ALComposite implements ClickHandler {
     public void onClick(ClickEvent event) {
         if (event.getSource().equals(image)) {
             if (validUrl) {
-                new GenericPopup(new Image(url + "&entityId=" + entityId)).show();
+                ImagePopup popup = new ImagePopup((new Image(url + "&entityId=" + entityId)));
+                popup.center();
+                popup.show();
             }
         }
     }
