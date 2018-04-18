@@ -27,14 +27,15 @@
 
 ###### Chili Security
 * Build in support for Identity management
+* OWASP top 10 Filters (XSS Filter, CSRF Filter, SQL Injection Filter)
+* Security Store, Key and Certificate management
+* Obfuscation support for code and data
+* ESAPI based input validation tools to secure incoming data.
 * Both Role and ACL based authorization
 * Pluggable and configurable Identity module (LDAP, DB, AD, etc)
 * Support for Encryption, Hashing, Key rotation and more
 * User/Device based auditiong and security
 * OWASP based dependency validation
-* OWASP top 10 Filters (XSS Filter, SQL Injection Filter)
-* Security Store, Key and Certificate management
-* Obfuscation support for code and data
 
 ###### Chili Integration
 [Integration Model](https://github.com/ayalamanchili/chili/blob/master/chili-master/chili-jms/Chili%20Adapter%20Integration%20Framework.png?raw=true)
