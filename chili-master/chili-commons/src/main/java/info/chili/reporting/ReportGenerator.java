@@ -60,6 +60,7 @@ public class ReportGenerator {
                 JasperPrint jasperPrint = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), data);
                 if (format.equalsIgnoreCase("xlsx")) {
                     jasperPrint.setProperty("net.sf.jasperreports.export.xls.freeze.row", "3");
+                    jasperPrint.setProperty("net.sf.jasperreports.export.xls.collapse.row.span", "true");
                     JRXlsxExporter exporter = new JRXlsxExporter();
                     exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
                     exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, location + filename);
