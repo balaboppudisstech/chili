@@ -68,6 +68,7 @@ public class ReportGenerator {
                     exporter.exportReport();
                 } else if(format.equalsIgnoreCase("xls")) {
                     jasperPrint.setProperty("net.sf.jasperreports.export.xls.freeze.row", "3");
+                    jasperPrint.setProperty("net.sf.jasperreports.export.xls.collapse.row.span", "true");
                     JRXlsExporter exporter = new JRXlsExporter();
                     exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
                     exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, location + filename);
