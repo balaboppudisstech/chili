@@ -17,7 +17,10 @@ public class UkStatesFactory {
     public static List<String> getStates() {
         List<String> states = new ArrayList();
         states.add("SELECT");
-        states.add("UK");
+        states.add("England");
+        states.add("Scotland");
+        states.add("Wales");
+        states.add("Northern Ireland");
         return states;
     }
 
