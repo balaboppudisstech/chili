@@ -3,12 +3,13 @@
  */
 package info.chili.gwt.crud;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 import info.chili.gwt.fields.TextAreaField;
@@ -17,8 +18,8 @@ import java.util.Map;
 public abstract class ReadComposite extends CRUDComposite {
 
     protected Button cloneB = new Button("Create Copy");
-    Anchor backL = new Anchor("Back");
-    Anchor editL = new Anchor("Edit");
+    public HTML backL = new HTML();
+    public HTML editL = new HTML();
 
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
@@ -58,6 +59,7 @@ public abstract class ReadComposite extends CRUDComposite {
     protected void configureBack() {
         if (enableBack()) {
             entityFieldsPanel.add(backL);
+            backL.setHTML("<b class=\"y-gwt-AbstractStatusPanel-backLogoImage\"</b>");
             backL.addClickHandler(new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent event) {
@@ -74,6 +76,8 @@ public abstract class ReadComposite extends CRUDComposite {
     protected void configureEdit() {
         if (enableEdit()) {
             entityFieldsPanel.add(editL);
+            editL.setHTML("<e class=\"y-gwt-AbstractStatusPanel-editLogoImage\"></e>");
+            editL.getElement().getStyle().setFloat(Style.Float.NONE);
             editL.addClickHandler(new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent event) {
