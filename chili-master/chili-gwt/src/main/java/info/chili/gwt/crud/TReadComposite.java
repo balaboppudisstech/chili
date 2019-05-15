@@ -9,8 +9,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class TReadComposite extends TCRUDComposite {
 
     protected Button cloneB = new Button("Create Copy");
-    Anchor backL = new Anchor("Back");
+    public HTML backL = new HTML();
 
     protected void initReadComposite(JSONObject entity, String className, final ConstantsWithLookup constants) {
         this.entity = entity;
@@ -69,6 +69,7 @@ public abstract class TReadComposite extends TCRUDComposite {
     protected void configureBack() {
         if (enableBack()) {
             entityPanel.add(backL);
+            backL.setHTML("<b class=\"y-gwt-AbstractStatusPanel-backLogoImage\"</b>");
             backL.addClickHandler(new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent event) {
