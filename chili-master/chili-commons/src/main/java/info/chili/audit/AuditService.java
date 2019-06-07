@@ -64,8 +64,8 @@ public class AuditService {
     public Object mostRecentVersion(Class cls, Long id) {
         List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
         logger.info("Versionnnnnnnnnn" + revNumbers);
-        if (revNumbers.size() > 0) {
-            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 1));
+        if (revNumbers.size() > 1) {
+            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 2));
         } else {
             return null;
         }
