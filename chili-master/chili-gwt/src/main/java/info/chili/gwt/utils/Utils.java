@@ -22,7 +22,9 @@ import java.util.Map;
  * The Class Utils.
  */
 public class Utils {
-
+    public static ConstantsWithLookup constants1 = null;
+    public static ConstantsWithLookup constants2 = null;
+    public static ConstantsWithLookup constants3 = null;
     public static String getShortDate(Date date) {
         if (date == null) {
             return "";
@@ -56,6 +58,24 @@ public class Utils {
         try {
             return constants.getString(key.trim());
         } catch (MissingResourceException e) {
+            System.out.println("Returning Constants....");
+            //return attribute;
+        }
+        try {
+            return constants1.getString(key.trim());
+        } catch (Exception e) {
+            System.out.println("Returning Constants1....");
+            //return attribute;
+        }
+        try {
+            return constants2.getString(key.trim());
+        } catch (Exception e) {
+            System.out.println("Returning Constants2....");
+            //return attribute;
+        }
+        try {
+            return constants3.getString(key.trim());
+        } catch (Exception e) {
             return attribute;
         }
     }
