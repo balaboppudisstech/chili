@@ -59,7 +59,7 @@ public abstract class ReadComposite extends CRUDComposite {
     protected void configureBack() {
         if (enableBack()) {
             entityFieldsPanel.add(backL);
-            backL.setHTML("<b class=\"y-gwt-AbstractStatusPanel-backLogoImage\"</b>");
+            backL.setHTML("<b class=\"y-gwt-AbstractStatusPanel-backLogoImage\" title=\"Back\"</b>");
             backL.addClickHandler(new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent event) {
@@ -76,7 +76,7 @@ public abstract class ReadComposite extends CRUDComposite {
     protected void configureEdit() {
         if (enableEdit()) {
             entityFieldsPanel.add(editL);
-            editL.setHTML("<e class=\"y-gwt-AbstractStatusPanel-editLogoImage\"></e>");
+            editL.setHTML("<e class=\"y-gwt-AbstractStatusPanel-editLogoImage\" title=\"Edit\"></e>");
             editL.getElement().getStyle().setFloat(Style.Float.NONE);
             editL.addClickHandler(new ClickHandler() {
                 @Override
