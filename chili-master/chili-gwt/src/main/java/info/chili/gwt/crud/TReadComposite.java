@@ -69,7 +69,7 @@ public abstract class TReadComposite extends TCRUDComposite {
     protected void configureBack() {
         if (enableBack()) {
             entityPanel.add(backL);
-            backL.setHTML("<b class=\"y-gwt-AbstractStatusPanel-backLogoImage\"</b>");
+            backL.setHTML("<b class=\"y-gwt-AbstractStatusPanel-backLogoImage\" title=\"Back\"></b>");
             backL.addClickHandler(new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent event) {

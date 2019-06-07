@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.persistence.EntityManager;
@@ -35,6 +36,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class AuditService {
+    
+    private static Logger logger = Logger.getLogger(AuditService.class.getName());
 
     protected AuditReader auditReader;
     //TODO get this only on demand
@@ -60,7 +63,7 @@ public class AuditService {
 
     public Object mostRecentVersion(Class cls, Long id) {
         List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
-        System.out.println("Notificationddddddddd" + revNumbers);
+        logger.info("Versionnnnnnnnnn" + revNumbers);
         if (revNumbers.size() > 0) {
             return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 1));
         } else {
