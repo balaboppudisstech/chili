@@ -53,19 +53,14 @@ public class AuditService {
     }
 
     public Object getVersion(Class cls, Long id, Integer version) {
-        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
-        revNumbers.sort((o1, o2) -> {
-            Integer val1 = ((Number) o1).intValue();
-            Integer val2 = ((Number) o2).intValue();
-            return val1.compareTo(val2);
-        });
-        logger.info("Versionnnnnnnnnn" + revNumbers);
-        if (revNumbers.size() >= 2) {
-            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 2));
-        } else {
-            return null;
-        }
-    }
+       List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
+       logger.info("Versionnnnnnnnnn" + revNumbers);
+       if (revNumbers.size() >= 2) {
+           return getAuditReader().find(cls, id, revNumbers.size() - 2);
+       } else {
+           return null;
+       }
+   }
 //TODO is this getting the current or second recent?
 
     public Object mostRecentVersion(Class cls, Long id) {
