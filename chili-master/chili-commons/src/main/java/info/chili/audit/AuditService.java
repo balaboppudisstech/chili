@@ -15,6 +15,7 @@ import info.chili.spring.SpringContext;
 import info.chili.service.jrs.types.EntityAuditDataTbl;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class AuditService {
-    
+
     private static Logger logger = Logger.getLogger(AuditService.class.getName());
 
     protected AuditReader auditReader;
@@ -53,8 +54,14 @@ public class AuditService {
 
     public Object getVersion(Class cls, Long id, Integer version) {
         List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
-        if (revNumbers.size() >= version) {
-            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - version));
+        revNumbers.sort((o1, o2) -> {
+            Integer val1 = ((Number) o1).intValue();
+            Integer val2 = ((Number) o2).intValue();
+            return val1.compareTo(val2);
+        });
+        logger.info("Versionnnnnnnnnn" + revNumbers);
+        if (revNumbers.size() >= 2) {
+            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 2));
         } else {
             return null;
         }
@@ -135,6 +142,8 @@ public class AuditService {
         }
         Map<String, Object> valuesMap = ReflectionUtils.getFieldsDataFromEntity(currentVersion, currentVersion.getClass(), true);
         Map<String, Object> previousValuesMap = ReflectionUtils.getFieldsDataFromEntity(previousVersion, previousVersion.getClass(), true);
+        logger.info("Current Map" + valuesMap);
+        logger.info("Previous Map" + previousValuesMap);
         for (Map.Entry<String, Object> entry : valuesMap.entrySet()) {
             if (ignoreFieldsList.contains(entry.getKey())) {
                 continue;
