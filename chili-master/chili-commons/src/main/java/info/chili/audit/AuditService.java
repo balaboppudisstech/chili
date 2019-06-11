@@ -54,9 +54,11 @@ public class AuditService {
 
     public Object getVersion(Class cls, Long id, Integer version) {
        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
-       logger.info("Versionnnnnnnnnn" + revNumbers);
+       logger.info("getVersion  Versionnnnnnnnnn" + revNumbers);
        if (revNumbers.size() >= 2) {
-           return getAuditReader().find(cls, id, revNumbers.size() - 2);
+           Object o = getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 2));
+           logger.info("getVersion  Object" + o);
+           return o;
        } else {
            return null;
        }
