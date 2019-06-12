@@ -74,6 +74,15 @@ public class AuditService {
             return null;
         }
     }
+     public Object previousVersion(Class cls, Long id) {
+        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
+        logger.info("previousVersion" + revNumbers);
+        if (revNumbers.size() >= 2) {
+            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 2));
+        } else {
+            return null;
+        }
+    }
 
     public String buildChangesTable(List<AuditChangeDto> changes) {
         StringBuilder changesTable = new StringBuilder();
