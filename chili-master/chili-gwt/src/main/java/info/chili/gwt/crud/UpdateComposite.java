@@ -3,8 +3,9 @@
  */
 package info.chili.gwt.crud;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import java.util.logging.Logger;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
@@ -33,6 +34,16 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
         populateFieldsFromEntity(entity);
     }
 
+    {
+        update.setVisible(false);
+        addDomHandler(new ChangeHandler() {
+            @Override
+            public void onChange(ChangeEvent event) {
+                update.setVisible(true);
+            }
+        }, ChangeEvent.getType());
+    }
+
     protected void initUpdateComposite(String id, String className, final ConstantsWithLookup constants) {
         this.entityId = id;
         init(className, false, constants);
@@ -55,7 +66,7 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
             }
         }
     }
-    
+
     protected void configureCancel() {
         if (enableCancel()) {
 //            entityCaptionPanel.addStyleName("y-gwt-CancelEntityCaptionPanel");
