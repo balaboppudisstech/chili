@@ -34,15 +34,6 @@ public abstract class UpdateComposite extends CRUDComposite implements ClickHand
         populateFieldsFromEntity(entity);
     }
 
-    {
-        update.setVisible(false);
-        addDomHandler(new ChangeHandler() {
-            @Override
-            public void onChange(ChangeEvent event) {
-                update.setVisible(true);
-            }
-        }, ChangeEvent.getType());
-    }
 
     protected void initUpdateComposite(String id, String className, final ConstantsWithLookup constants) {
         this.entityId = id;
