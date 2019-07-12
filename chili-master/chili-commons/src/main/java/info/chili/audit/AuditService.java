@@ -74,7 +74,15 @@ public class AuditService {
             return null;
         }
     }
-    
+    public Object mostRecentVersion2(Class cls, Long id) {
+       List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
+       logger.info("Versionnnnnnnnnn222222" + revNumbers);
+       if (revNumbers.size() > 1) {
+           return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 1));
+       } else {
+           return null;
+       }
+   }
      public Object previousVersion(Class cls, Long id) {
         List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
         logger.info("previousVersion" + revNumbers);
