@@ -13,12 +13,13 @@ import info.chili.service.jrs.types.Entries;
 import info.chili.service.jrs.types.Entry;
 import info.chili.spring.SpringContext;
 import info.chili.service.jrs.types.EntityAuditDataTbl;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -150,7 +151,8 @@ public class AuditService {
     }
 
     public List<AuditChangeDto> compare(Object previousVersion, Object currentVersion, boolean addStyle, String... ignoreFields) {
-        List<AuditChangeDto> changes = new ArrayList();
+       SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-YYYY @ hh:mm:ss a, 'ET'");
+       List<AuditChangeDto> changes = new ArrayList();
         ignoreFieldsList.addAll(Arrays.asList(ignoreFields));
         if (previousVersion == null) {
             return changes;
@@ -190,12 +192,13 @@ public class AuditService {
                         AuditChangeDto dto = new AuditChangeDto();
                         dto.setPropertyName(entry.getKey());
                         Date oldDate = (Date) previousValuesMap.get(entry.getKey());
-                        dto.setOldValue(info.chili.commons.DateUtils.removeTime(oldDate).toString());
+                        dto.setOldValue(sdf.format(oldDate));
+                         
                         Date newDate = (Date) entry.getValue();
                         if (addStyle) {
-                            dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + newDate.toString() + "</font>");
+                            dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + sdf.format(newDate) + "</font>");
                         } else {
-                            dto.setNewValue(newDate.toString());
+                            dto.setNewValue(sdf.format(newDate));
                         }
                         changes.add(dto);
                     }
