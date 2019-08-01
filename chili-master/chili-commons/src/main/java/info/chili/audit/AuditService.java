@@ -13,6 +13,7 @@ import info.chili.service.jrs.types.Entries;
 import info.chili.service.jrs.types.Entry;
 import info.chili.spring.SpringContext;
 import info.chili.service.jrs.types.EntityAuditDataTbl;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -151,7 +152,10 @@ public class AuditService {
     }
 
     public List<AuditChangeDto> compare(Object previousVersion, Object currentVersion, boolean addStyle, String... ignoreFields) {
-       SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-YYYY @ hh:mm:ss a, 'ET'");
+    //   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-YYYY @ hh:mm:ss a, 'ET'");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy ,hh:mm ");
+             sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
+
        List<AuditChangeDto> changes = new ArrayList();
         ignoreFieldsList.addAll(Arrays.asList(ignoreFields));
         if (previousVersion == null) {
@@ -193,7 +197,7 @@ public class AuditService {
                         dto.setPropertyName(entry.getKey());
                         Date oldDate = (Date) previousValuesMap.get(entry.getKey());
                         dto.setOldValue(sdf.format(oldDate));
-                         
+                          
                         Date newDate = (Date) entry.getValue();
                         if (addStyle) {
                             dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + sdf.format(newDate) + "</font>");
