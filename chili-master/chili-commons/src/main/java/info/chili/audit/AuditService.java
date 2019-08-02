@@ -152,11 +152,9 @@ public class AuditService {
     }
 
     public List<AuditChangeDto> compare(Object previousVersion, Object currentVersion, boolean addStyle, String... ignoreFields) {
-    //   SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-YYYY @ hh:mm:ss a, 'ET'");
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy ,hh:mm ");
-             sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
-
-       List<AuditChangeDto> changes = new ArrayList();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy ");
+        //sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
+           List<AuditChangeDto> changes = new ArrayList();
         ignoreFieldsList.addAll(Arrays.asList(ignoreFields));
         if (previousVersion == null) {
             return changes;
@@ -217,8 +215,8 @@ public class AuditService {
                     }
                     changes.add(dto);
                 }
+                }
             }
-        }
         return changes;
     }
 
