@@ -207,11 +207,11 @@ public class AuditService {
                 } else {
                     AuditChangeDto dto = new AuditChangeDto();
                     dto.setPropertyName(entry.getKey());
-                    dto.setOldValue(sdf.format((Date)previousValuesMap.get(entry.getKey())));
+                    dto.setOldValue((previousValuesMap.get(entry.getKey()).toString()));
                     if (addStyle) {
-                        dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + sdf.format((Date)entry.getValue()) + "</font>");
+                        dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + (entry.getValue().toString()) + "</font>");
                     } else {
-                        dto.setNewValue(sdf.format((Date)entry.getValue()));
+                        dto.setNewValue(entry.getValue().toString());
                     }
                     changes.add(dto);
                 }
