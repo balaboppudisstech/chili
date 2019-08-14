@@ -55,16 +55,16 @@ public class AuditService {
     }
 
     public Object getVersion(Class cls, Long id, Integer version) {
-       List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
-       logger.info("getVersion  Versionnnnnnnnnn" + revNumbers);
-       if (revNumbers.size() >= 2) {
-           Object o = getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 2));
-           logger.info("getVersion  Object" + o);
-           return o;
-       } else {
-           return null;
-       }
-   }
+        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
+        logger.info("getVersion  Versionnnnnnnnnn" + revNumbers);
+        if (revNumbers.size() >= 2) {
+            Object o = getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 2));
+            logger.info("getVersion  Object" + o);
+            return o;
+        } else {
+            return null;
+        }
+    }
 //TODO is this getting the current or second recent?
 
     public Object mostRecentVersion(Class cls, Long id) {
@@ -77,15 +77,15 @@ public class AuditService {
         }
     }
     public Object mostRecentVersion2(Class cls, Long id) {
-       List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
-       logger.info("Versionnnnnnnnnn222222" + revNumbers);
-       if (revNumbers.size() > 1) {
-           return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 1));
-       } else {
-           return null;
-       }
-   }
-     public Object previousVersion(Class cls, Long id) {
+        List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
+        logger.info("Versionnnnnnnnnn222222" + revNumbers);
+        if (revNumbers.size() >= 1) {
+            return getAuditReader().find(cls, id, revNumbers.get(revNumbers.size() - 1));
+        } else {
+            return null;
+        }
+    }
+    public Object previousVersion(Class cls, Long id) {
         List<Number> revNumbers = getAuditReader().getRevisions(cls, id);
         logger.info("previousVersion" + revNumbers);
         if (revNumbers.size() >= 2) {
@@ -154,10 +154,10 @@ public class AuditService {
     public List<AuditChangeDto> compare(Object previousVersion, Object currentVersion, boolean addStyle, String... ignoreFields) {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy ");
         //sdf.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
-           List<AuditChangeDto> changes = new ArrayList();
+        List<AuditChangeDto> changes = new ArrayList();
         ignoreFieldsList.addAll(Arrays.asList(ignoreFields));
         if (previousVersion == null) {
-            return changes;
+                    return changes;
         }
         Map<String, Object> valuesMap = ReflectionUtils.getFieldsDataFromEntity(currentVersion, currentVersion.getClass(), true);
         Map<String, Object> previousValuesMap = ReflectionUtils.getFieldsDataFromEntity(previousVersion, previousVersion.getClass(), true);
@@ -171,19 +171,31 @@ public class AuditService {
                 AuditChangeDto dto = new AuditChangeDto();
                 dto.setPropertyName(entry.getKey());
                 dto.setOldValue("");
-                if (addStyle) {
-                    dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
+                if (entry.getValue() instanceof Date) {
+                    if (addStyle) {
+                        dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + sdf.format(entry.getValue()) + "</font>");
+                    } else {
+                        dto.setNewValue(sdf.format(entry.getValue()));
+                    }
                 } else {
-                    dto.setNewValue(entry.getValue().toString());
+                    if (addStyle) {
+                        dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
+                    } else {
+                        dto.setNewValue(entry.getValue().toString());
+                    }
                 }
                 changes.add(dto);
-
                 continue;
             }
             if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() == null) {
                 AuditChangeDto dto = new AuditChangeDto();
                 dto.setPropertyName(entry.getKey());
-                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
+                if(previousValuesMap.get(entry.getKey()) instanceof Date){
+                 Date oldDate = (Date) previousValuesMap.get(entry.getKey());
+                        dto.setOldValue(sdf.format(oldDate));
+                }
+                else{
+                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());}
                 dto.setNewValue("");
                 changes.add(dto);
                 continue;
@@ -195,7 +207,7 @@ public class AuditService {
                         dto.setPropertyName(entry.getKey());
                         Date oldDate = (Date) previousValuesMap.get(entry.getKey());
                         dto.setOldValue(sdf.format(oldDate));
-                          
+
                         Date newDate = (Date) entry.getValue();
                         if (addStyle) {
                             dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + sdf.format(newDate) + "</font>");
@@ -215,8 +227,8 @@ public class AuditService {
                     }
                     changes.add(dto);
                 }
-                }
             }
+        }
         return changes;
     }
 
