@@ -191,15 +191,17 @@ public class AuditService {
             if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() == null) {
                 AuditChangeDto dto = new AuditChangeDto();
                 dto.setPropertyName(entry.getKey());
+                 dto.setNewValue("");
                 if(previousValuesMap.get(entry.getKey()) instanceof Date){
                  Date oldDate = (Date) previousValuesMap.get(entry.getKey());
                         dto.setOldValue(sdf.format(oldDate));
+                        changes.add(dto);
                 }
                 else{
                 dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
-                }
-                dto.setNewValue("");
                 changes.add(dto);
+                }
+                
                 continue;
             }
             if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() != null && !previousValuesMap.get(entry.getKey()).equals(entry.getValue())) {
