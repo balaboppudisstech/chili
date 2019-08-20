@@ -177,15 +177,16 @@ public class AuditService {
                     } else {
                         dto.setNewValue(sdf.format(entry.getValue()));
                     }
+                    changes.add(dto);
                 } else {
                     if (addStyle) {
                         dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
                     } else {
                         dto.setNewValue(entry.getValue().toString());
                     }
+                     changes.add(dto);
                 }
-                changes.add(dto);
-                continue;
+              continue;
             }
             if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() == null) {
                 AuditChangeDto dto = new AuditChangeDto();
@@ -195,7 +196,8 @@ public class AuditService {
                         dto.setOldValue(sdf.format(oldDate));
                 }
                 else{
-                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());}
+                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
+                }
                 dto.setNewValue("");
                 changes.add(dto);
                 continue;
