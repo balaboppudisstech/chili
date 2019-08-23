@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.ui.Button;
 import info.chili.gwt.resources.ChiliImages;
 import info.chili.gwt.widgets.ClickableImage;
 import info.chili.gwt.widgets.GenericPopup;
@@ -25,7 +26,7 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
 
     public enum OptionsType {
 
-        READ, UPDATE, DELETE, PRINT, COPY, CANCEL, READ_UPDATE, READ_UPDATE_DELETE, READ_DELETE, UPDATE_DELETE, MARK_READ
+        READ, EMPTY, UPDATE, DELETE, PRINT, COPY, CANCEL, READ_UPDATE, READ_UPDATE_DELETE, READ_DELETE, UPDATE_DELETE, MARK_READ
     };
     protected OptionsType[] types;
 
@@ -124,6 +125,11 @@ public class TableRowOptionsWidget extends GenericTableRowOptionsWidget implemen
                 }
                 if (OptionsType.CANCEL.equals(type)) {
                     panel.add(cancelLink);
+                }
+                if (OptionsType.EMPTY.equals(type)) {
+                    Button b = new Button();
+                    b.addStyleName("hidebutton");
+                    panel.add(b);
                 }
                 if (OptionsType.MARK_READ.equals(type)) {
                     panel.add(markAsReadLink);
