@@ -177,31 +177,27 @@ public class AuditService {
                     } else {
                         dto.setNewValue(sdf.format(entry.getValue()));
                     }
-                    changes.add(dto);
                 } else {
                     if (addStyle) {
                         dto.setNewValue("<font style=\"BACKGROUND-COLOR: yellow\">" + entry.getValue().toString() + "</font>");
                     } else {
                         dto.setNewValue(entry.getValue().toString());
                     }
-                     changes.add(dto);
                 }
-              continue;
+                changes.add(dto);
+                continue;
             }
             if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() == null) {
                 AuditChangeDto dto = new AuditChangeDto();
                 dto.setPropertyName(entry.getKey());
-                 dto.setNewValue("");
                 if(previousValuesMap.get(entry.getKey()) instanceof Date){
                  Date oldDate = (Date) previousValuesMap.get(entry.getKey());
                         dto.setOldValue(sdf.format(oldDate));
-                        changes.add(dto);
                 }
                 else{
-                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());
+                dto.setOldValue(previousValuesMap.get(entry.getKey()).toString());}
+                dto.setNewValue("");
                 changes.add(dto);
-                }
-                
                 continue;
             }
             if (previousValuesMap.get(entry.getKey()) != null && entry.getValue() != null && !previousValuesMap.get(entry.getKey()).equals(entry.getValue())) {
