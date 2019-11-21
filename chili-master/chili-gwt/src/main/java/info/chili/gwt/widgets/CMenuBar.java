@@ -22,7 +22,7 @@ public abstract class CMenuBar extends Composite implements ClickHandler {
     HorizontalPanel menuP = new HorizontalPanel();
     protected static final String SELECTED_MENU_ITEM_STYLE = "y-gwt-MenuItem-selectedMI";
     protected static final String MENU_ITEM_STYLE = "y-gwt-MenuItem";
-    LinkedHashMap<Label, Command> menuItems = new LinkedHashMap();
+    protected static LinkedHashMap<Label, Command> menuItems = new LinkedHashMap();
 
     public CMenuBar() {
         initWidget(menuP);
