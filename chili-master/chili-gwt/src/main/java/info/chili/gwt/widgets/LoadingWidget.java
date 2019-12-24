@@ -30,7 +30,7 @@ public class LoadingWidget extends PopupPanel {
      */
     public void show() {
         int left = Window.getClientWidth() / 3;
-        this.setPopupPosition(left, 0);
+        this.setPopupPosition(left,  Window.getClientHeight()/2);
         addStyleName("y-gwt-new-ResponseStatusBar");
         super.show();
     }
