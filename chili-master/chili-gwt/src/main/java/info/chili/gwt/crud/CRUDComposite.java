@@ -492,13 +492,15 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                     field.focus(true);
                     focus = false;
                 }
-            } else if (childIndex >= 0) {
+            } 
+            else if (childIndex >= 0) {
                 setChildErrorMsg(getChildWidget(childIndex), err, errSource);
-            } else {
+            }
+            else {
                 //Generic error not specific to any field / class level error
                 if (genericErrorMessage == null) {
                     genericErrorMessage = new String();
-                    genericErrorMessage = genericErrorMessage.concat("Error:");
+                    genericErrorMessage = genericErrorMessage.concat("");
                 }
                 
                 if(err.get("description").isString().stringValue().contains("Validation failed")){
@@ -517,7 +519,7 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
                     }
                 }
                 else{
-                    genericErrorMessage = genericErrorMessage.concat(err.get("source").isString().stringValue() + ":" + err.get("description").isString().stringValue());
+                    genericErrorMessage = genericErrorMessage.concat(err.get("description").isString().stringValue());
                 }
             }
         }
@@ -670,3 +672,4 @@ public abstract class CRUDComposite extends Composite implements KeyPressListene
         return Utils.getLineSeperatorTag(title);
     }
 }
+
