@@ -16,17 +16,18 @@ public class LoadingWidget extends PopupPanel {
      * The loading.
      */
     //Label loading = new Label("");
-    Image loading =new Image ("https://apps.sstech.us/loading.gif");
+    Image loading = new Image("https://apps.sstech.us/loading.gif");
+
     /**
      * Instantiates a new loading widget.
      */
     public LoadingWidget() {
         super(true);
-          loading.setHeight("100px");
-           loading.setWidth("100px");
-           
+        loading.setHeight("100px");
+        loading.setWidth("100px");
+
         setWidget(loading);
-      
+
     }
 
     /*
@@ -36,7 +37,7 @@ public class LoadingWidget extends PopupPanel {
      */
     public void show() {
         int left = Window.getClientWidth() / 2;
-         this.setPopupPosition(left, Window.getClientHeight()/3);
+        this.setPopupPosition(left, Window.getClientHeight() / 3);
         //addStyleName("y-gwt-new-ResponseStatusBar");
         super.show();
     }
