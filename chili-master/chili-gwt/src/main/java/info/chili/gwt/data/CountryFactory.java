@@ -19,6 +19,7 @@ public class CountryFactory {
         countries.add("INDIA");
         countries.add("CANADA");
         countries.add("UK");
+        countries.add("Costa Rica");
         return countries;
     }
 }
