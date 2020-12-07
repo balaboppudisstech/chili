@@ -49,6 +49,12 @@ HttpConnectionParams.setSoTimeout(
     public static DefaultHttpClient getHttpClient(boolean newClient) {
         if (newClient || httpclient == null) {
             httpclient = new DefaultHttpClient();
+            int timeout = 50; // seconds
+HttpParams httpParams = httpclient.getParams();
+            HttpConnectionParams.setConnectionTimeout(
+  httpParams, timeout * 1000); // http.connection.timeout
+HttpConnectionParams.setSoTimeout(
+  httpParams, timeout * 1000); // http.socket.timeout
         }
         return httpclient;
     }
