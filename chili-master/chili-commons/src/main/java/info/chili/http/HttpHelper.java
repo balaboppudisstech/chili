@@ -23,6 +23,8 @@ import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 public class HttpHelper {
 
@@ -32,6 +34,12 @@ public class HttpHelper {
     public static DefaultHttpClient getHttpClient() {
         if (httpclient == null) {
             httpclient = new DefaultHttpClient();
+            int timeout = 50; // seconds
+HttpParams httpParams = httpclient.getParams();
+            HttpConnectionParams.setConnectionTimeout(
+  httpParams, timeout * 1000); // http.connection.timeout
+HttpConnectionParams.setSoTimeout(
+  httpParams, timeout * 1000); // http.socket.timeout
             return httpclient;
         } else {
             return httpclient;
