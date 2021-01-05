@@ -56,6 +56,10 @@ public class JSONUtils {
                 JSONArray entities = JSONUtils.toJSONArray(listObject.get("entry"));
                 return convertJSONArrayToKayValueStringMap(entities);
             }
+              if (listObject != null && listObject.get("entities") != null) {
+                JSONArray entities = JSONUtils.toJSONArray(listObject.get("entities"));
+                return convertJSONArrayToKayValueStringMap(entities);
+            }
         }
         return null;
     }
@@ -65,6 +69,10 @@ public class JSONUtils {
             JSONObject listObject = JSONParser.parseLenient(jsonString).isObject();
             if (listObject != null && listObject.get("entry") != null) {
                 JSONArray entities = JSONUtils.toJSONArray(listObject.get("entry"));
+                return convertJSONArrayToKayValueMap(entities);
+            }
+            if (listObject != null && listObject.get("entities") != null) {
+                JSONArray entities = JSONUtils.toJSONArray(listObject.get("entities"));
                 return convertJSONArrayToKayValueMap(entities);
             }
         }
@@ -85,6 +93,9 @@ public class JSONUtils {
             JSONObject entity = (JSONObject) entities.get(i - 1);
             Integer key = Integer.valueOf(JSONUtils.toString(entity, "id"));
             String value = JSONUtils.toString(entity, "value");
+            if(value ==null || value =="" ){
+                value = JSONUtils.toString(entity, "name");
+            }
             values.put(key, value);
         }
         return values;
@@ -96,6 +107,9 @@ public class JSONUtils {
             JSONObject entity = (JSONObject) entities.get(i - 1);
             String key = JSONUtils.toString(entity, "id");
             String value = JSONUtils.toString(entity, "value");
+            if(value ==null || value =="" ){
+                value = JSONUtils.toString(entity, "name");
+            }
             values.put(key, value);
         }
         return values;
