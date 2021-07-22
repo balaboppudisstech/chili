@@ -39,7 +39,7 @@ public class ReflectiveReportBuilder extends ar.com.fdvs.dj.domain.builders.Refl
 		Class clazz = Class.forName(className);
 		if (BigDecimal.class.isAssignableFrom(clazz) || Float.class.isAssignableFrom(clazz) || Double.class.isAssignableFrom(clazz)) {
 			if (column.getPattern() == null)
-				column.setPattern("$ #.00");
+				column.setPattern("#.00");
 			column.setStyle(currencyStyle);
 		}
 
